@@ -10,6 +10,7 @@
 
 using namespace std;
 
+// Player node. Technically not part of the circular linked list, but it does have pointers to the linked list
 class Player {
     public:
     TrueOwner* owner;
@@ -26,6 +27,7 @@ class Player {
         isBankrupt = gameOver;
     }
 
+    // Rolls a d3 and moves the player. Forces the player to pay rent if landing on owned property
     void movePlayer() {
         int roll = rand() % 3 + 1;
         
@@ -45,6 +47,7 @@ class Player {
         }
     }
 
+    // This loser of a function took forever to figure out. All it does is give like 30 bucks from one person to the other.
     void payMoneyTo(TrueOwner* payer, TrueOwner* recipient, int amount) {
         payer->money = payer->money - amount;
         recipient->money = recipient->money + amount;
@@ -52,6 +55,7 @@ class Player {
         cout << payer->ownerName << " paid $" << amount << " to " << recipient->ownerName << endl;
     }
 
+    // Buys property and turns some booleans in the linked list to show ownership. Checks on ownership are not made here
     void buyProperty() {
         owner->money = owner->money - currentPosition->cost;
         currentPosition->owned = true;
@@ -60,6 +64,7 @@ class Player {
         cout << owner->ownerName << " bought " << currentPosition->name << " for $" << currentPosition->cost << endl;
     }
 
+    // Upgrades property at a more expensive cost. Doubles cost afterwards, which also doubles rent
     void upgradeProperty() {
         owner->money = owner->money - currentPosition->cost - 50;
         currentPosition->cost = currentPosition->cost * 2;
